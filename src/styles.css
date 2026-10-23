@@ -1,0 +1,271 @@
+:root {
+  --ink: #1d2433;
+  --muted: #5d6b82;
+  --line: #d8dee9;
+  --paper: #ffffff;
+  --bg: #f4f6fa;
+  --accent: #2f5d8f;
+  --danger: #a3242b;
+  --ok: #1f6b4a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+.shell {
+  min-height: 100vh;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.85rem 1.25rem;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+
+.bar nav {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.bar nav a {
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.bar nav a.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+.role {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+main {
+  padding: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 1.35rem;
+  margin: 0 0 1rem;
+}
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1.1rem;
+  margin-bottom: 1.1rem;
+}
+
+.row {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+input,
+select {
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font: inherit;
+  background: #fff;
+}
+
+button {
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  border-radius: 6px;
+  font: inherit;
+  cursor: pointer;
+}
+
+button.ghost {
+  background: transparent;
+  color: var(--accent);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.55rem 0.5rem;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+th {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.banner {
+  padding: 0.7rem 0.9rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border: 1px solid;
+}
+
+.banner.error {
+  color: var(--danger);
+  border-color: #e7b9bc;
+  background: #fdf3f3;
+}
+
+.banner.ok {
+  color: var(--ok);
+  border-color: #b7dcc8;
+  background: #f1faf5;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  border: 1px solid var(--line);
+}
+
+.tag.open {
+  color: var(--accent);
+}
+
+.tag.overdue {
+  color: var(--danger);
+  border-color: #e7b9bc;
+}
+
+.tag.closed {
+  color: var(--muted);
+}
+
+.cover {
+  width: 38px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: 4px;
+  background: var(--bg);
+}
+
+.pager {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  margin-top: 0.9rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.login {
+  max-width: 340px;
+  margin: 10vh auto;
+}
+
+.login label {
+  margin-bottom: 0.8rem;
+}
+
+.login input {
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .bar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.65rem;
+    padding: 0.75rem;
+  }
+
+  .bar nav {
+    width: 100%;
+    gap: 0.2rem;
+  }
+
+  .bar nav a {
+    flex: 1 1 auto;
+    padding: 0.4rem 0.5rem;
+    text-align: center;
+  }
+
+  .role {
+    align-self: flex-start;
+    margin-left: 0;
+  }
+
+  main {
+    padding: 1rem 0.75rem;
+  }
+
+  .card {
+    overflow-x: auto;
+    padding: 0.8rem;
+  }
+
+  .card.row > label {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  input,
+  select {
+    min-height: 2.5rem;
+    max-width: 100%;
+  }
+
+  table {
+    min-width: 600px;
+  }
+
+  .login {
+    width: 100%;
+  }
+}

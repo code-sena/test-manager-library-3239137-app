@@ -1,50 +1,51 @@
 # test-manager-library-3239137-app
 
-> **Prueba técnica · Ficha ADSO 3239137**
-> Horario: **viernes 23 de octubre de 2026, de 7:00 a. m. a 11:00 a. m.** (hora Colombia). Entrega a las **11:00 a. m.**
+Frontend de **Manager Library** en React. Son las pantallas de operación: lo que
+usan el administrador y el bibliotecario.
 
-Este repositorio es el **frontend** de *Manager Library*, en **React**. **Empieza vacío a propósito**: se construye en el fork de cada aprendiz.
+## Puesta en marcha
 
-## Instrucciones
+```bash
+cp .env.example .env     # VITE_API_URL apunta a la API
+npm install
+npm run dev              # http://localhost:5173
+```
 
-Cada aprendiz debe **crear el fork** de los seis repositorios del proyecto y **resolver el proyecto
-con el spec planteado**.
+Con `infra` levantado no hace falta nada de esto: el compose construye y sirve
+este repositorio.
 
-1. Hacer fork, a su cuenta de GitHub, de cada repositorio de la tabla del final.
-2. Leer el spec en [`test-manager-library-3239137-docs`](https://github.com/code-sena/test-manager-library-3239137-docs).
-   Se entrega en dos versiones: `spec-python/` y `spec-.net/`.
-3. Desarrollar en los forks.
+## Pantallas
 
-## El reto se desarrolla con React y PHP (Laravel)
+| Ruta | Qué resuelve | Rol |
+|---|---|---|
+| `/entrar` | Inicio de sesión | público |
+| `/libros` | Catálogo: búsqueda, filtro, alta, edición, baja y portada | ver todos; mantener solo admin |
+| `/socios` | Lista, búsqueda y alta de socios | admin y bibliotecario |
+| `/prestar` | Elegir socio y hasta 3 libros, registrar el préstamo | admin y bibliotecario |
+| `/prestamos` | Filtrar por fecha y estado, devolver línea por línea | admin y bibliotecario |
+| `/vencidos` | Qué libro, qué socio y cuántos días de retraso | admin y bibliotecario |
+| `/reporte` | Libros más prestados por rango de fechas | solo admin |
 
-El spec está escrito para Python y para .NET, pero el reto **no** se hace en esos lenguajes:
+## Cómo está organizado
 
-| Capa | Tecnología del reto |
-|---|---|
-| Frontend | React |
-| Backend | PHP con Laravel |
+```
+src/
+├── api.js          <- el único sitio que conoce la URL y el token
+├── App.jsx         <- rutas, menú y guardia por rol
+├── components/     <- Banner, Pager, Cover
+└── pages/          <- una pantalla por archivo
+```
 
-Lo que el spec define sobre el negocio —historias, criterios de aceptación, reglas, contrato de la
-API, modelo de datos— se respeta. Lo que define sobre la tecnología se traduce a React y Laravel.
+## Decisiones
 
-## La prueba no consiste en escribir el código
-
-El propósito principal es ver la **capacidad de desempeño con SDD** (*Spec-Driven Development*,
-desarrollo guiado por especificación): cómo se lee, se interpreta y se aplica una especificación
-para llevarla a un stack distinto. El código es el medio, no el fin.
-
-## Entrega
-
-Cuenta lo que quede **subido a los forks antes de las 11:00 a. m.** Lo que llegue después no se revisa.
-No hay prórroga: suban avances parciales con commits pequeños durante la prueba.
-
-## Los seis repositorios
-
-| Repositorio | Qué va ahí |
-|---|---|
-| [`test-manager-library-3239137-docs`](https://github.com/code-sena/test-manager-library-3239137-docs) | El spec: `spec-python/` y `spec-.net/` |
-| [`test-manager-library-3239137-api`](https://github.com/code-sena/test-manager-library-3239137-api) | Backend en PHP (Laravel) |
-| [`test-manager-library-3239137-app`](https://github.com/code-sena/test-manager-library-3239137-app) | Frontend en React |
-| [`test-manager-library-3239137-page`](https://github.com/code-sena/test-manager-library-3239137-page) | Sitio público estático de presentación |
-| [`test-manager-library-3239137-infra`](https://github.com/code-sena/test-manager-library-3239137-infra) | Contenedores, red, volúmenes y motor de base de datos vacío |
-| [`test-manager-library-3239137-tool`](https://github.com/code-sena/test-manager-library-3239137-tool) | Utilidades: sembrador de datos de demostración |
+- **La autorización de verdad está en la API.** El menú esconde el reporte a
+  quien no es admin, pero el 403 lo da el backend: el frontend no es la puerta,
+  solo evita un clic que iba a fallar.
+- **Los errores se muestran como vienen.** El backend manda un cuerpo único
+  `{ code, message, details }` ya en español, así que `Banner` lo pinta tal cual
+  en vez de inventar textos por código de estado.
+- **Las portadas se piden con el token.** Un `<img src>` no puede enviar la
+  cabecera `Authorization`, así que `Cover` trae el binario y lo convierte en
+  una URL de objeto, que libera al desmontarse.
+- **Sin librería de componentes.** Siete pantallas con tablas y formularios no
+  justifican arrastrar un sistema de diseño entero.
